@@ -6,6 +6,7 @@ var Userdata =mongoose.model('userdata',{
   password:String,
   bookings:Array,
   address:String,
-  phoneNumber:String
+  phoneNumber:String,
+  email:String
 })
 module.exports=Userdata

@@ -4,6 +4,7 @@ import {Route,Link} from 'react-router-dom'
 import './App.css';
 import Home from './Component/Home/home.js'
 import Mybookings from './Component/Mybookings/MyBooking.js'
+import User from './Component/user/User.js'
 class App extends Component {
   render() {
     return (
@@ -11,7 +12,7 @@ class App extends Component {
         <div>
           <Route path="/" exact component={Home}></Route>
           <Route path="/mybookings" component={Mybookings}></Route>
-          <Route path="/user" render={()=><h1>hello user</h1>}></Route>
+          <Route path="/user"  component={User} ></Route>
         </div>
 
       </BrowserRouter>

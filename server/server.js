@@ -3,7 +3,7 @@ var app =express();
 var cors =require('cors');
 var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
-var objectID = require('mongodb').ObjectID;
+// var objectID = require('mongodb').ObjectID;
 var hotel=require('./db/restaurants.js')
 var userdata=require('./db/userdata.js')
 app.use(cors());
@@ -60,11 +60,11 @@ app.get('/api/restaurants/search/:search_text',async(req,res)=>{
 app.get('/userid',async(req,res)=>{
   let data =await userdata.find({});
   res.send(data)
-  console.log(data);
+  // console.log(data);
 
 })
 //-----------------------------------------------------------
-//user post
+//login post
 //-----------------------------------------------------
 app.post('/api/user',async(req,res)=>{
   let findUser =await userdata.findOne({name:req.body.name})
@@ -81,6 +81,28 @@ app.post('/api/user',async(req,res)=>{
   }
 
 })
+//-----------------------------------------------------------------------
+//userDetails post
+//-----------------------------------------------------------------------
+app.post('/userid',async(req,res)=>{
+  let obj=req.body
+  console.log(obj);
+  let result =await userdata.findOne({'name':"ramu"})
+    if(obj.name!=="")
+    result['name']=obj.name;
+    if(obj.email!=="")
+    result['email']=obj.email;
+    if(obj.address!=="")
+    result['address']=obj.address;
+    if(obj.phoneNumber!=="")
+    result['phoneNumber']=obj.phoneNumber;
+    await result.save()
+    console.log(result);
+
+  console.log(result);
+  res.send(result)
+})
+
 //--------------------------------------------------------------------------
 // book a hotels
 //--------------------------------------------------------------------------

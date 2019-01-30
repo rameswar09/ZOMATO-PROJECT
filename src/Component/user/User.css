@@ -1,0 +1,42 @@
+.show-user-div{
+  width: 85%;
+  height:auto;
+  border: 1px solid black;
+  padding: 10px;
+}
+.user-logo-image{
+  display: block;
+  width: 200px;
+  height: 200px;
+  margin-left: auto;
+  margin-right: auto;
+}
+input,select,textarea{
+margin: 10px;
+}
+mybookings-div{
+  width: 100%;
+  height: auto;
+}
+.featured{
+  display: inline-block;
+  /* border: 1px solid green; */
+  width: 250px;
+  height:auto;
+  margin: 10px;
+  color: black;
+  font-size: 15px;
+  background-color: rgba(247,249,249,0.6);
+  border-radius: 5px;
+  box-shadow: 5px 10px 18px #888888;
+}
+.featured-image{
+  width: 250px;
+  height: 100px;
+  border-radius: 5px;
+}
+.my-bookings-text{
+  font-size: 50px;
+  text-align: center;
+
+}
