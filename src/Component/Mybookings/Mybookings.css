@@ -1,12 +1,14 @@
 .show-hotels-div-in-MyBooking{
-  width: 85%;
+  width:70%;
   height:auto;
-  /* border: 1px solid black; */
-  padding: 10px;
-  display: flex;
+  /* border: 1px solid red; */
+  /* padding: 10px; */
+  display: grid;
   flex-flow: wrap;
+  grid-template-columns: 1fr 1fr 1fr;
   /* align-items: center; */
-  justify-content: center;
+  /* justify-content:; */
+  margin: auto;
 }
 .My-Bookings-text{
   font-size: 30px;

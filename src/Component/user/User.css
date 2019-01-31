@@ -1,7 +1,7 @@
 .show-user-div{
   width: 85%;
   height:auto;
-  border: 1px solid black;
+  /* border: 1px solid black; */
   padding: 10px;
 }
 .user-logo-image{
@@ -39,4 +39,71 @@ mybookings-div{
   font-size: 50px;
   text-align: center;
 
+}
+.detailsText{
+  font-size: 40px;
+  color: rgb(235, 23, 23,0.9)
+}
+.in{
+  width: 300px;
+  height: 40px;
+  border: 0;
+  border-radius: 10px;
+}
+.update{
+  width: 100px;
+  height: 40px;
+  border: 0;
+  border-radius: 10px;
+  background-color: rgb(84, 26, 226,0.6);
+  margin-left:40px;
+  margin-top: 10px;
+  color: white;
+}
+.user{
+  width:500px;
+  height: 30px;
+  padding: 5px;
+  border-radius: 10px;
+  background-color: rgb(213, 233, 235);
+  border:0
+}
+.email{
+  width:540px;
+  height: 30px;
+  padding: 5px;
+  border-radius: 10px;
+  background-color: rgb(213, 233, 235);
+  border:0
+}
+.phone{
+  width:535px;
+  height: 30px;
+  padding: 5px;
+  border-radius: 10px;
+  background-color: rgb(213, 233, 235);
+  border:0
+}
+.address{
+  width:527px;
+  height: 30px;
+  padding: 5px;
+  border-radius: 10px;
+  background-color: rgb(213, 233, 235);
+  border:0
+}
+.save{
+  width: 150px;
+  height: 30px;
+  margin-top: 30px;
+  background-color: rgb(11, 13, 219);
+  border:0;
+  border-radius:10px;
+  color: white;
+}
+.user-div{
+  /* border: 1px solid black; */
+  width: 70%;
+  margin: auto;
+    margin-top: 100px;
 }

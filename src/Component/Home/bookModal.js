@@ -49,18 +49,13 @@ class bookModal extends Component{
     return(
       <div className={className}>
         <div className="modal-content">
-        <div className="featured"><img className="featured-image" src={this.state.curHotelData.featured_image} alt=""></img>
-          <p>NAME:<span>{this.state.curHotelData.name}</span></p>
-          LOCATION:<span>{this.state.curHotelData.location.address}</span><br/>
-        USER RATINGS:<span>{this.state.curHotelData.user_rating.aggregate_rating}</span>
-        </div>
-        <p><span>No of persons</span><input type="text" onChange={this.handleChangeNoOfPerson}></input></p>
-          <p><span>Date:</span><input type="date" onChange={this.handleChangeDate}/></p>
+        <p><span><strong>No of persons:</strong></span><input className="no-of-person" type="text" onChange={this.handleChangeNoOfPerson}></input></p>
+          <p><span><strong>Date:</strong></span><input className="date"  type="date" onChange={this.handleChangeDate}/></p>
           <form onChange={this.handleChangeTime}>
-      Select a time: <input type="time" name="usr_time"/>
+      <strong>Time:</strong> <input className="time"  type="time" name="usr_time"/>
     </form>
-        <button type="button" onClick={this.bookTable}>Book Table</button>
-        <button type="button" onClick={this.cancel}>cancel</button>
+        <button className="book" type="button" onClick={this.bookTable}>Book Table</button>
+        <button className="cancel-book" type="button" onClick={this.cancel}>cancel</button>
 
         </div>
       </div>

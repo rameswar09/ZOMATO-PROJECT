@@ -3,19 +3,22 @@ import './home.css'
 import {Link} from 'react-router-dom'
 import Login from './../LoginModal/loginModal.js'
 import BookModal from './bookModal.js'
+import FullModal from './hotelDetailsModal.js'
 class home extends Component{
   state={
     hotelsData:[],
     isLogin:false,
     searchHotelText:"",
     isBookModalShow:false,
-    curHotelData:{}
+    curHotelData:{},
+    isShowHotelModal:false,
+    curHotelDetailsData:{}
+
   }
 
   async componentDidMount(){
     let hotels =await fetch('http://localhost:4000/api/restaurants/trending',{method:'get'})
         hotels= await hotels.json()
-        // console.log(hotels);
         this.setState({
           hotelsData:hotels
         })
@@ -52,6 +55,13 @@ class home extends Component{
       isBookModalShow:!this.state.isBookModalShow
     })
   }
+  handleChangeShowHotel=(item)=>{
+    this.setState({
+      isShowHotelModal:!this.state.isShowHotelModal,
+      curHotelDetailsData:item
+    })
+    console.log(this.state.isShowHotelModal);
+  }
   render(){
     return(
       <div>
@@ -71,10 +81,9 @@ class home extends Component{
           {
             this.state.hotelsData.map((item)=>{
               return(
-                <div className="featured"><img className="featured-image" src={item.featured_image} alt=""></img>
-                  <p>NAME:<span>{item.name}</span></p>
-                  LOCATION:<span>{item.location.address}</span><br/>
-                USER RATINGS:<span>{item.user_rating.aggregate_rating}</span>
+                <div className="featured"><img className="featured-image" src={item.featured_image} alt="" onClick={(e)=>this.handleChangeShowHotel(item)}></img>
+                  <p><strong>NAME:</strong><span>{item.name}</span></p>
+                <strong>USER RATINGS:</strong><span>{item.user_rating.aggregate_rating}</span>
               <p><button className="Book-button" type="button" onClick={(e)=>this.bookHotel(item)}>Book</button></p>
               </div>
               )
@@ -84,7 +93,7 @@ class home extends Component{
       </div>
       {this.state.isLogin?<Login/>:null}
       {this.state.isBookModalShow?<BookModal item={this.state.curHotelData} modalShow={this.bookModalShow}/>:null}
-
+      {this.state.isShowHotelModal?<FullModal hotelData={this.state.curHotelDetailsData}/>:null}
       </div>
     )
   }

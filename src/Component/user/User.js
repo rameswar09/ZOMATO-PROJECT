@@ -26,26 +26,7 @@ class user extends Component{
 
       })
   }
-  handleChangeName=(e)=>{
-    this.setState({
-      nameChange:e.target.value
-    })
-  }
-  handleChangeEmail=(e)=>{
-    this.setState({
-      emailChange:e.target.value
-    })
-  }
-  handleChangePhoneNo=(e)=>{
-    this.setState({
-      phoneNumberChange:e.target.value
-    })
-  }
-  handleChangeAddress=(e)=>{
-    this.setState({
-      addressChange:e.target.value
-    })
-  }
+
   saveUserData=async()=>{
     let obj={
       name:this.state.nameChange,
@@ -53,16 +34,27 @@ class user extends Component{
       phoneNumber:this.state.phoneNumberChange,
       address:this.state.addressChange
     }
-    let updateUserData =await fetch('http://localhost:4000/userid',{method:'post',body:JSON.stringify(obj),headers:{'Content-Type': 'application/json'}})
+
+
+  }
+  onhandleClick=(key)=>{
+    this.state.userDetails[key]=""
+    this.setState({
+      userDetails:this.state.userDetails
+    })
+  }
+  handleChange=(key,e)=>{
+    this.state.userDetails[key]=e.target.value
+    this.setState({
+      userDetails:this.state.userDetails
+    })
+  }
+  onClickSave=async()=>{
+    let updateUserData =await fetch('http://localhost:4000/userid',{method:'post',body:JSON.stringify(this.state.userDetails),headers:{'Content-Type': 'application/json'}})
       updateUserData =await updateUserData.json()
       this.setState({
-        userDetails:updateUserData,
-        nameChange:"",
-        emailChange:"",
-        phoneNumberChange:"",
-        addressChange:""
+        userDetails:updateUserData
       })
-
   }
   render(){
     return(
@@ -81,35 +73,13 @@ class user extends Component{
             <div className="show-user-div">
               <img className="user-logo-image" src={this.state.userLogo} alt="logo"></img>
                 <div className="user-div">
-                <p>Name:{this.state.userDetails.name}</p>
-                <p>Email:{this.state.userDetails.email}</p>
-                <p>Phone Number:{this.state.userDetails.phoneNumber}</p>
-                <p>Address:{this.state.userDetails.address}</p>
-                Name:<input type="text" onChange={this.handleChangeName} value={this.state.userDetails.name}></input><br/>
-                  Email:<input type="email" onChange={this.handleChangeEmail} value={this.state.emailChange}></input><br/>
-                  Phone No:<input type="text" onChange={this.handleChangePhoneNo}value={this.state.phoneNumberChange}></input><br/>
-                  <label>Address:</label><textarea placeholder="enter address...." onChange={this.handleChangeAddress} value={this.state.addressChange}></textarea><br/>
-                  Payment:<select name="pay">
-                              <option value="COD">COD</option>
-                              <option value="Net Banking">Net Banking</option>
-                              <option value="UPI">UPI</option>
-                          </select><br/>
-                          <button type="type" onClick={this.saveUserData}>Update</button>
-                </div>
-                <div className="mybookings-div">
-                <p className="my-bookings-text">My bookings</p>
-                {
-                  this.state.bookingsHotelDataOfUser.map((item)=>{
-                    return(
-                      <div className="featured"><img className="featured-image" src={item.hotel.featured_image} alt=""></img>
-                        <p>NAME:<span>{item.hotel.name}</span></p>
-                    <p><span>No of persons:</span>{item.noOfPerson}</p>
-                      <p><span>Date:</span>{item.date}</p>
-                        <p><span>Time:</span>{item.time}</p>
-                    </div>
-                    )
-                  })
-                }
+                   <form>
+                      <strong>User Name:</strong> <input className="user" name=" username" onClick={(e)=>this.onhandleClick("name")} onChange={(e)=>this.handleChange("name",e)}   value={this.state.userDetails.name}/><br/>
+                      <strong>  Email:</strong> <input className="email"   name="email" onClick={(e)=>this.onhandleClick("email")} onChange={(e)=>this.handleChange("email",e)} value={this.state.userDetails.email} /><br/>
+                      <strong>Phone:</strong> <input className="phone"  name="phone" onClick={(e)=>this.onhandleClick("phoneNumber")} onChange={(e)=>this.handleChange("phoneNumber",e)} value={this.state.userDetails.phoneNumber} /><br/>
+                      <strong>  Address:</strong><input className="address"  name="address" onClick={(e)=>this.onhandleClick("address")} onChange={(e)=>this.handleChange("address",e)} value={this.state.userDetails.address}/><br/>
+                      <button className="save" type="button" onClick={this.onClickSave}>save</button>
+                      </form>
                 </div>
             </div>
           </div>

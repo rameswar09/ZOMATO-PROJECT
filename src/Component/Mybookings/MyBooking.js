@@ -34,13 +34,11 @@ class Mybookings extends Component{
             {
               this.state.bookingsHotelDataOfUser.map((item)=>{
                 return(
-                  <div className="featured"><img className="featured-image" src={item.hotel.featured_image} alt=""></img>
-                    <p>NAME:<span>{item.hotel.name}</span></p>
-                    LOCATION:<span>{item.hotel.location.address}</span><br/>
-                  USER RATINGS:<span>{item.hotel.user_rating.aggregate_rating}</span>
-                <p><span>No of persons:</span>{item.noOfPerson}</p>
-                  <p><span>Date:</span>{item.date}</p>
-                    <p><span>Time:</span>{item.time}</p>
+                  <div className="featured"><img className="featured-image" src={item.hotel.featured_image} alt=""></img><br/><br/>
+                    <strong>NAME:</strong><span>{item.hotel.name}</span><br/><br/>
+                <strong>No of persons:</strong><span>{item.noOfPerson}</span><br/><br/>
+                  <strong>Date:</strong><span>{item.date}</span><br/><br/>
+                    <strong>Time:</strong><span>{item.time}</span>
                 </div>
                 )
               })
