@@ -6,6 +6,7 @@ var mongoose = require('mongoose');
 // var objectID = require('mongodb').ObjectID;
 var hotel=require('./db/restaurants.js')
 var userdata=require('./db/userdata.js')
+var globalUser
 app.use(cors());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
@@ -58,7 +59,7 @@ app.get('/api/restaurants/search/:search_text',async(req,res)=>{
 //user get by id
 //--------------------------------------------------------------
 app.get('/userid',async(req,res)=>{
-  let data =await userdata.find({});
+  let data =await userdata.find({email:globalUser});
   res.send(data)
   // console.log(data);
 
@@ -67,6 +68,8 @@ app.get('/userid',async(req,res)=>{
 //login post
 //-----------------------------------------------------
 app.post('/api/user',async(req,res)=>{
+  globalUser=req.body.email
+  console.log(req.body.email);
   let findUser =await userdata.findOne({name:req.body.name})
     if(findUser==null){
       userdata.insertMany([req.body], (err) => {
@@ -77,7 +80,6 @@ app.post('/api/user',async(req,res)=>{
   }else{
       console.log('user already exist');
     res.send('user already exist')
-
   }
 
 })
@@ -87,7 +89,7 @@ app.post('/api/user',async(req,res)=>{
 app.post('/userid',async(req,res)=>{
   let obj=req.body
   console.log(obj);
-  let result =await userdata.findOne({'name':"ramu"})
+  let result =await userdata.findOne({email:globalUser})
     if(obj.name!=="")
     result['name']=obj.name;
     if(obj.email!=="")
@@ -108,7 +110,9 @@ app.post('/userid',async(req,res)=>{
 //--------------------------------------------------------------------------
 app.post('/api/bookings',async(req,res)=>{
   let hotelData= req.body
-    let user= await userdata.findOne({name:"ramu"})
+  console.log(hotelData);
+  console.log(globalUser);
+    let user= await userdata.findOne({email:globalUser})
       user.bookings.push(hotelData);
       await user.save();
       res.send('done')

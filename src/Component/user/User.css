@@ -69,28 +69,31 @@ mybookings-div{
   border:0
 }
 .email{
-  width:540px;
+  width:500px;
   height: 30px;
   padding: 5px;
   border-radius: 10px;
   background-color: rgb(213, 233, 235);
-  border:0
+  border:0;
+  margin-left:50px;
 }
 .phone{
-  width:535px;
+  width:500px;
   height: 30px;
   padding: 5px;
   border-radius: 10px;
   background-color: rgb(213, 233, 235);
-  border:0
+  border:0;
+  margin-left: 45px;
 }
 .address{
-  width:527px;
+  width:500px;
   height: 30px;
   padding: 5px;
   border-radius: 10px;
   background-color: rgb(213, 233, 235);
-  border:0
+  border:0;
+  margin-left:35px;
 }
 .save{
   width: 150px;

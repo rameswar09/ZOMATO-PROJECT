@@ -1,9 +1,9 @@
 import React, {Component} from 'react'
 import './home.css'
 import {Link} from 'react-router-dom'
-import Login from './../LoginModal/loginModal.js'
 import BookModal from './bookModal.js'
 import FullModal from './hotelDetailsModal.js'
+import Login from '../LoginModal/GoogleLogin.js'
 class home extends Component{
   state={
     hotelsData:[],
@@ -65,14 +65,16 @@ class home extends Component{
   render(){
     return(
       <div>
-      <div className="header-part"><strong className="zomato">zomato</strong><span><div className="login" onClick={this.loginUser}>Login</div></span></div>
+      <div className="header-part"><strong className="zomato">zomato</strong>
+      <Login/>
+      </div>
       <div className="search-part">
         <div className="search-text-part"><span>Search hotel:</span><input className="search-text" type="text" placeholder="search by name" onChange={this.handleChange} onKeyUp={this.getHotelsBySearch}></input></div>
       </div>
       <div className="total-home-body">
         <div className="links">
         <ul>
-          <li><Link to="/">Home</Link></li>
+          <li><Link to="/home">Home</Link></li>
           <li><Link to="/mybookings">My Bookings</Link></li>
           <li><Link to="/user">User</Link></li>
         </ul>
@@ -99,6 +101,3 @@ class home extends Component{
   }
 }
 export default home
-  // <footer className="footer"></footer>
-  //
-  //

@@ -25,7 +25,7 @@ class Mybookings extends Component{
         <div className="total-home-body">
           <div className="links">
           <ul>
-            <li><Link to="/">Home</Link></li>
+            <li><Link to="/home">Home</Link></li>
             <li><Link to="/mybookings">My Bookings</Link></li>
             <li><Link to="/user">User</Link></li>
           </ul>
