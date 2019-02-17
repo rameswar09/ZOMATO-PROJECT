@@ -1,5 +1,7 @@
-  import React,{Component} from 'react';
+import React,{Component} from 'react';
 import './bookModal.css'
+import {connect} from 'react-redux'
+import {postHotelData,closeBookModal} from '../../store/Actions/bookTableAction.js'
 class bookModal extends Component{
   state={
     curHotelData:this.props.item,
@@ -24,27 +26,16 @@ class bookModal extends Component{
       time:e.target.value
     })
   }
-  bookTable=async ()=>{
+  render(){
     let bookObj={
       hotel: this.state.curHotelData,
       noOfPerson:this.state.noOfPerson,
       date:this.state.date,
       time:this.state.time,
     }
-    let bookHotelByUser =await fetch('http://localhost:4000/api/bookings',{method:'post',body:JSON.stringify(bookObj),headers:{'Content-Type': 'application/json'}})
-      bookHotelByUser= await bookHotelByUser.text()
-      this.setState({
-        isBookModalClose:!this.state.isBookModalClose
-      })
-  }
-  cancel=()=>{
-    this.setState({
-      isBookModalClose:!this.state.isBookModalClose
-    })
-  }
-  render(){
+  console.log(bookObj);
     let className
-    this.state.isBookModalClose?className=["modal"]:className=["modal-close"]
+    this.props.bookTable?className=["modal"]:className=["modal-close"]
     console.log(this.props.item);
     return(
       <div className={className}>
@@ -54,12 +45,23 @@ class bookModal extends Component{
           <form onChange={this.handleChangeTime}>
       <strong>Time:</strong> <input className="time"  type="time" name="usr_time"/>
     </form>
-        <button className="book" type="button" onClick={this.bookTable}>Book Table</button>
-        <button className="cancel-book" type="button" onClick={this.cancel}>cancel</button>
+        <button className="book" type="button" onClick={()=>this.props.postHotel(bookObj)}>Book Table</button>
+        <button className="cancel-book" type="button" onClick={this.props.cancel}>cancel</button>
 
         </div>
       </div>
     )
   }
 }
-export default bookModal
+const mapStateToProps =state=>{
+  return{
+    bookTable: state.bookTableModal.isBookModalShow
+  }
+}
+const mapDispatchToProps= dispatch=>{
+  return{
+    postHotel:(data)=> dispatch(postHotelData(data)),
+    cancel:()=>dispatch(closeBookModal())
+  }
+}
+export default connect(mapStateToProps,mapDispatchToProps)(bookModal)

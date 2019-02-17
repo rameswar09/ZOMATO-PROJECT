@@ -1,75 +1,56 @@
 import React, {Component} from 'react'
+import {connect} from 'react-redux'
 import './home.css'
 import {Link} from 'react-router-dom'
 import BookModal from './bookModal.js'
 import FullModal from './hotelDetailsModal.js'
 import Login from '../LoginModal/GoogleLogin.js'
+import {getdata,searchData}from '../../store/Actions/homeAction.js'
 class home extends Component{
   state={
     hotelsData:[],
-    isLogin:false,
     searchHotelText:"",
     isBookModalShow:false,
     curHotelData:{},
-    isShowHotelModal:false,
-    curHotelDetailsData:{}
-
+  }
+   componentDidMount(){
+    this.props.getTopHotels()
   }
 
-  async componentDidMount(){
-    let hotels =await fetch('http://localhost:4000/api/restaurants/trending',{method:'get'})
-        hotels= await hotels.json()
-        this.setState({
-          hotelsData:hotels
-        })
-        console.log(this.state.hotelsData);
-  }
-  loginUser=()=>{
-    this.setState({isLogin:!this.state.isLogin})
-  }
   handleChange=(e)=>{
     this.setState({
       searchHotelText:e.target.value
     })
-    console.log(this.state.searchHotelText);
   }
-  getHotelsBySearch=async(e)=>{
-    console.log('hello');
-    if(e.keyCode===13){
-      let getHotelsDataBySearch= await fetch(`http://localhost:4000/api/restaurants/search/${this.state.searchHotelText}`)
-      getHotelsDataBySearch= await getHotelsDataBySearch.json()
-      this.setState({
-        hotelsData:getHotelsDataBySearch
-      })
+  getSearchHotels=(e)=>{
+      if(e.keyCode===13){
+        console.log("enter");
+        console.log(this.state.searchHotelText);
+        this.props.getSearchHotels(this.state.searchHotelText)
+      }
     }
-  }
-  bookHotel=async(bookDetails)=>{
+  bookHotel=(bookDetails)=>{
     this.setState({
       curHotelData:bookDetails,
       isBookModalShow:!this.state.isBookModalShow
     })
     console.log(this.state.curHotelData);
   }
-  bookModalShow=()=>{
-    this.setState({
-      isBookModalShow:!this.state.isBookModalShow
-    })
-  }
   handleChangeShowHotel=(item)=>{
     this.setState({
       isShowHotelModal:!this.state.isShowHotelModal,
       curHotelDetailsData:item
     })
-    console.log(this.state.isShowHotelModal);
   }
   render(){
+    console.log(this.props.hotelsData);
     return(
       <div>
       <div className="header-part"><strong className="zomato">zomato</strong>
       <Login/>
       </div>
       <div className="search-part">
-        <div className="search-text-part"><span>Search hotel:</span><input className="search-text" type="text" placeholder="search by name" onChange={this.handleChange} onKeyUp={this.getHotelsBySearch}></input></div>
+        <div className="search-text-part"><span>Search hotel:</span><input className="search-text" type="text" placeholder="search by name" onChange={this.handleChange} onKeyUp={this.getSearchHotels}></input></div>
       </div>
       <div className="total-home-body">
         <div className="links">
@@ -81,7 +62,7 @@ class home extends Component{
         </div>
         <div className="show-hotels-div">
           {
-            this.state.hotelsData.map((item)=>{
+            this.props.hotelsData.map((item)=>{
               return(
                 <div className="featured"><img className="featured-image" src={item.featured_image} alt="" onClick={(e)=>this.handleChangeShowHotel(item)}></img>
                   <p><strong>NAME:</strong><span>{item.name}</span></p>
@@ -100,4 +81,15 @@ class home extends Component{
     )
   }
 }
-export default home
+const mapStateToProps = state => {
+    return {
+        hotelsData: state.home.homeData
+    };
+};
+const mapDispatchToProps =dispatch=>{
+  return{
+    getTopHotels:()=>dispatch(getdata()),
+    getSearchHotels:(text)=>dispatch(searchData(text))
+  }
+}
+export default connect(mapStateToProps,mapDispatchToProps)(home)

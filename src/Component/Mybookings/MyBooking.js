@@ -2,21 +2,14 @@ import React,{Component} from 'react'
 import {Link} from 'react-router-dom'
 import './Mybookings.css'
 import './../Home/home.css'
+import {connect} from 'react-redux'
+import {fetchData} from '../../store/Actions/myBookingsActions.js'
 class Mybookings extends Component{
-  state={
-    bookingsHotelDataOfUser:[]
-  }
-  async componentDidMount(){
-    console.log('hello mybookings');
-    let bookingsHotelDataOfUser = await fetch('http://localhost:4000/userid')
-      bookingsHotelDataOfUser =await bookingsHotelDataOfUser.json()
-      bookingsHotelDataOfUser= bookingsHotelDataOfUser[0].bookings
-      console.log(bookingsHotelDataOfUser);
-      this.setState({
-          bookingsHotelDataOfUser
-      })
+   componentDidMount(){
+    this.props.getMybookingsData()
   }
   render(){
+    console.log(this.props.myBookingsHotels);
     return(
       <div>
         <div className="header-part"><strong className="zomato">zomato</strong></div>
@@ -32,7 +25,7 @@ class Mybookings extends Component{
           </div>
           <div className="show-hotels-div-in-MyBooking">
             {
-              this.state.bookingsHotelDataOfUser.map((item)=>{
+              this.props.myBookingsHotels.map((item)=>{
                 return(
                   <div className="featured"><img className="featured-image" src={item.hotel.featured_image} alt=""></img><br/><br/>
                     <strong>NAME:</strong><span>{item.hotel.name}</span><br/><br/>
@@ -49,4 +42,15 @@ class Mybookings extends Component{
     )
   }
 }
-export default Mybookings
+const mapStateToProps=(state)=>{
+  return{
+    myBookingsHotels:state.myBookings.myBookingHotels
+  }
+}
+const mapDispatchToProps=(dispatch)=>{
+  return{
+    getMybookingsData:()=>dispatch(fetchData())
+  }
+}
+export default  connect(mapStateToProps,mapDispatchToProps)(Mybookings)
+//
